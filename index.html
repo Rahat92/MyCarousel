@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		.carosul{
+			width: 80%;
+			position: relative;
+			height: 650px;
+			background: red;
+			margin:auto;
+		}
+		img{
+			width: 500px;
+			max-width: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			margin: auto;
+			display: none;
+		}
+		.activeimg{
+			display: block;
+		}
+		.next, .prev{
+			position: absolute;
+			top: 50%;
+		}
+		.next{
+			right: 0;
+		}
+		#dot{
+			width: 100%;
+			text-align: center;
+			margin-top: 2rem;
+		}
+		.dot{
+			width: 20px;
+			height: 20px;
+			background: white;
+			border: 3px solid black;
+			border-radius:50%; 
+			display: inline-block;
+			text-align: center;
+
+		}
+		.active{
+			background: black;
+		}
+	</style>
+</head>
+<body>
+	<h1>This is the hand made carosul</h1>
+	<div class="carosul">
+		<img src="../rahat.JPG" alt="" width="300px" height="auto" class="activeimg">
+		<img src="../rajuchacha.png" alt="" width="300px" height="auto">
+		<img src="../Artboard 1.png" alt="" width="300px" height="auto">
+		<img src="img/Jenin apu..jpg" alt="" width="auto" height="300px">
+		<img src="img/IMG-20160725-WA0001.jpg" alt="" width="auto" height="300px">
+		<button class="prev" disabled onclick="changeback()" >Prev</button>
+		<button class="next" onclick="changeforward()">Next</button>
+	</div>
+	<div id="dot">
+		<span class="dot active"></span>
+		<span class="dot"></span>
+		<span class="dot"></span>
+		<span class="dot"></span>
+		<span class="dot"></span>
+	</div>
+	<script>
+		
+		var takedot = document.querySelectorAll(".dot");
+		var takeimg = document.querySelectorAll("img");
+		var takePrev = document.querySelector(".prev");
+		var takeNext = document.querySelector(".next")
+		var number = 1;
+		takedot.forEach(function(i,j){
+			i.onclick = function(){
+
+				for(i=0;i<takedot.length;i++){
+					takedot[i].classList.remove("active");
+					takeimg[i].classList.remove("activeimg");
+				}
+				takedot[j].classList.add("active");
+				takeimg[j].classList.add("activeimg");
+				number = j+1;
+				if(number<2){
+					takePrev.setAttribute("disabled","");
+					takeNext.removeAttribute("disabled");
+				}
+				else if(number>takedot.length-1){
+					takeNext.setAttribute("disabled","");
+					takePrev.removeAttribute("disabled")
+				}
+				else{
+					takePrev.removeAttribute("disabled");
+					takeNext.removeAttribute("disabled");
+				}
+
+				
+			}
+
+		});
+		function changeforward(){
+			number+=1;
+			if(number >takeimg.length-1){
+				number =takeimg.length;
+				takeNext.setAttribute("disabled","");
+
+			}
+			takePrev.removeAttribute("disabled");
+			for(i=0;i<takeimg.length;i++){
+
+				takeimg[i].classList.remove("activeimg");
+				takeimg[number-1].classList.add("activeimg");
+				takedot[i].classList.remove("active");
+				takedot[number-1].classList.add("active");
+			}
+
+		}
+		function changeback(){
+			number-=1;
+			if(number < 2){
+				number =1;
+				takePrev.setAttribute("disabled","");
+			}
+
+			for(i=0;i<takeimg.length;i++){
+
+				takeimg[i].classList.remove("activeimg");
+				takeimg[number-1].classList.add("activeimg");
+				takedot[i].classList.remove("active");
+				takedot[number-1].classList.add("active");
+			}
+		takeNext.removeAttribute("disabled");
+		}
+	</script>
+</body>
+</html>
